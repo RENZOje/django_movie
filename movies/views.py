@@ -5,6 +5,8 @@ from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import *
+
+
 # Create your views here.
 
 
@@ -13,28 +15,21 @@ class GenreYear:
         return Genre.objects.all()
 
     def get_years(self):
-        return Movie.objects.filter(draft=False).values('year')
+        return Movie.objects.filter(draft=False).values('year').distinct()
 
 
 class MoviesView(GenreYear, ListView):
     model = Movie
     template_name = 'movies/movie_list.html'
     queryset = Movie.objects.filter(draft=False)
-
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    #     context['categories'] = Category.objects.all()
-    #     return context
-
-
+    ordering = ['id']
+    paginate_by = 1
 
 
 class MovieDetailView(GenreYear, DetailView):
     model = Movie
     slug_field = 'url'
     template_name = 'movies/movie_detail.html'
-
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -50,7 +45,7 @@ class AddReview(View):
         if form.is_valid():
             form = form.save(commit=False)
 
-            if request.POST.get('parent',None):
+            if request.POST.get('parent', None):
                 form.parent_id = int(request.POST.get('parent'))
 
             form.movie = movie
@@ -59,22 +54,30 @@ class AddReview(View):
         return redirect(movie.get_absolute_url())
 
 
-
 class ActorView(GenreYear, DetailView):
     model = Actor
     template_name = 'movies/actor.html'
     slug_field = 'name'
 
 
-
 class FilterMoviesView(GenreYear, ListView):
+    """Фильтр фильмов"""
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = Movie.objects.filter(
-            Q(year__in=self.request.GET.getlist('year')) |
-            Q(genres__in=self.request.GET.getlist('genre'))
-        )
+            Q(year__in=self.request.GET.getlist("year")) |
+            Q(genres__in=self.request.GET.getlist("genre"))
+        ).distinct()
         return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['year'] = ''.join([f'year={x}&' for x in self.request.GET.getlist('year')])
+        context['genre'] = ''.join([f'genre={x}&' for x in self.request.GET.getlist('genre')])
+        print(context)
+        return context
+
 
 
 class JsonFilterMoviesView(ListView):
@@ -83,16 +86,17 @@ class JsonFilterMoviesView(ListView):
         queryset = Movie.objects.filter(
             Q(year__in=self.request.GET.getlist('year')) |
             Q(genres__in=self.request.GET.getlist('genre'))
-        ).distinct().values('title','tag_line','url','poster')
+        ).distinct().values('title', 'tag_line', 'url', 'poster')
         return queryset
 
     def get(self, request, *args, **kwargs):
         queryset = list(self.get_queryset())
-        return JsonResponse({'movies':queryset}, safe=False)
+        return JsonResponse({'movies': queryset}, safe=False)
 
 
 class AddStarRating(View):
     """Добавление рейтинга фильму"""
+
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:

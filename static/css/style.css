@@ -95,6 +95,7 @@ nav {
     padding: 0;
 }
 
+
 #logo a {
     float: left;
     display: initial;
@@ -106,6 +107,7 @@ nav {
     text-shadow: 2px 5px 3px rgba(0, 0, 0, 0.06);
     font-family: 'Source Sans Pro', sans-serif;
 }
+
 
 /* Since we'll have the "ul li" "float:left"
  * we need to add a clear after the container. */
@@ -152,11 +154,13 @@ nav ul li {
     -ms-transition: 0.5s all ease;
 }
 
+
 .menu li ul li a {
     color: #555;
     padding: 10px 10px;
     font-size: 0.8em;
 }
+
 
 .menu li ul li:hover {
     background: #f8f9fa !important;
@@ -206,7 +210,7 @@ nav ul ul li a {
     display: block;
 }
 
-/* Second, Third and more Tiers	
+/* Second, Third and more Tiers
  * We move the 2nd and 3rd etc tier dropdowns to the left
  * by the amount of the width of the first tier.
 */
@@ -218,11 +222,13 @@ nav ul ul ul li {
     left: 170px;
 }
 
+
 /* Change ' +' in order to change the Dropdown symbol */
 
 li > a:only-child:after {
     content: '';
 }
+
 
 /* Media Queries
 --------------------------------------------- */
@@ -316,6 +322,7 @@ li > a:only-child:after {
         font-size: 17px;
     }
 
+
     nav ul li ul li .toggle,
     nav ul ul a {
         background-color: #212121;
@@ -398,7 +405,7 @@ li > a:only-child:after {
 
 .bg1 {
     background-color: rgba(0, 0, 0, 0);
-    margin-top: 0px;
+    margin-top: 0;
     background-image: url('../single-post-pic.jpg');
 }
 
@@ -650,40 +657,44 @@ span.product-new-top {
     padding: 0.3em 1.2em;
     color: #fff;
 }
+
 /* Checkbox stars */
 .rating {
-  overflow: hidden;
-  vertical-align: bottom;
-  display: inline-block;
-  width: 155px;
-  height: 30px;
+    overflow: hidden;
+    vertical-align: bottom;
+    display: inline-block;
+    width: 155px;
+    height: 30px;
 }
 
 .rating > input {
-  opacity: 0;
-  margin-right: -100%;
+    opacity: 0;
+    margin-right: -100%;
 }
 
 .rating > label {
-  position: relative;
-  display: block;
-  float: right;
-  background: url('../images/star-off-big.png');
-  background-size: 30px 30px;
+    position: relative;
+    display: block;
+    float: right;
+    background: url('../images/star-off-big.png');
+    background-size: 30px 30px;
 }
 
 .rating > label:before {
-  display: block;
-  opacity: 0;
-  content: '';
-  width: 30px;
-  height: 30px;
-  background: url('../images/star-on-big.png');
-  background-size: 30px 30px;
-  transition: opacity 0.2s linear;
+    display: block;
+    opacity: 0;
+    content: '';
+    width: 30px;
+    height: 30px;
+    background: url('../images/star-on-big.png');
+    background-size: 30px 30px;
+    transition: opacity 0.2s linear;
 }
 
-.rating > label:hover:before,  .rating > label:hover ~ label:before,  .rating:not(:hover) > :checked ~ label:before { opacity: 1; }
+.rating > label:hover:before, .rating > label:hover ~ label:before, .rating:not(:hover) > :checked ~ label:before {
+    opacity: 1;
+}
+
 /* //Checkbox stars */
 
 /*-- //New-Arrivals --*/
@@ -856,6 +867,7 @@ li.breadcrumb-item a {
     text-transform: uppercase;
 }
 
+
 .img-deal1 a {
     font-size: 14px;
     color: #6d6c6c;
@@ -896,7 +908,7 @@ ul.w3layouts-box-list li {
     text-transform: uppercase;
     font-weight: 600;
     text-decoration: none;
-    color: #fff;
+    /*color: #fff;*/
     padding: 0;
 
 }
@@ -938,8 +950,8 @@ ul.w3layouts-box-list li {
     color: #555555;
     text-transform: capitalize;
     font-size: 14px;
-    -webkit-text-stroke: 0px;
-    letter-spacing: 0px;
+    -webkit-text-stroke: 0;
+    letter-spacing: 0;
 }
 
 .available span a {
@@ -993,8 +1005,111 @@ h3.sear-head {
     margin-right: 4px;
 }
 
+
 /*-- //customer --*/
 
+/* Pagination */
+.pagination {
+    width: auto;
+    margin: 0 auto
+}
+
+.pagination,
+.pagination__link {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.pagination__link {
+    position: relative;
+    left: -1px;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all .2s ease-in-out;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    color: #6163b9
+}
+
+@media only screen and (max-width: 767px) {
+    .pagination__link {
+        font-size: 15px
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .pagination a.pagination__link:hover {
+        background: rgba(102, 88, 175, .15)
+    }
+}
+
+.pagination__item {
+    transition: all .2s ease-in-out;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    z-index: 1;
+    position: relative;
+    margin: 0 2px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+@media only screen and (max-width: 767px) {
+    .pagination__item {
+        margin: 0 2px;
+        width: 33px;
+        height: 33px
+    }
+}
+
+.pagination__item:first-child {
+    margin-left: 0
+}
+
+.pagination__item:last-child {
+    margin-right: 0
+}
+
+@media only screen and (max-width: 1023px) {
+    .pagination__item:nth-child(3),
+    .pagination__item:nth-child(9) {
+        display: none
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .pagination__item.active:hover
+    .pagination__link {
+        color: #fff;
+        background: #6658af
+    }
+}
+
+.pagination__item.active .pagination__link {
+    color: #fff;
+    background: #6658af
+}
+
+.pagination__item--dots .pagination__link {
+    color: #bfc0f1
+}
+
+/* --/Pagination */
 /*--/footer--*/
 
 footer {
